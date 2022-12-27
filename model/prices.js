@@ -9,7 +9,7 @@ name: {
 },
 prices: {
     date: {
-        type: String
+        type: Date()
     },
     price: {
         type: Number
