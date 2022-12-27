@@ -16,7 +16,7 @@ subcategories: {
     }
 },
 
-    },{ collection: 'market' }
+    },{ collection: 'subcategories' }
  )
 
 const subcategories = mongoose.model('StoreSchema', StoreSchema);
