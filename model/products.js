@@ -14,7 +14,7 @@ subcategory: {
     type: String
 },
 
-    },{ collection: 'market' }
+    },{ collection: 'products' }
  )
 
 const products = mongoose.model('StoreSchema', StoreSchema);
