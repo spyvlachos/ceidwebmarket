@@ -7,7 +7,7 @@ id: {
 name: {
     type: String
 },
-tags: {
+subcategories: {
     name: {
         type: String
     },
