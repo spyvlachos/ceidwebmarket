@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const StoreSchema = new mongoose.Schema({
 type: {
     type: Object
-}    
+},    
 id: {
     type: String
 },
@@ -12,7 +12,7 @@ lat: {
 },
 lon: {
      type: Number
-    }                                      
+    } ,                                     
 name: {
     type: String
 },
