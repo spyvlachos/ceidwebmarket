@@ -1,48 +1,34 @@
 const mongoose = require("mongoose");
 
 const StoreSchema = new mongoose.Schema({
+type: {
+    type: Object
+}    
 id: {
     type: String
 },
+lat: {
+     type: Number
+},
+lon: {
+     type: Number
+    }                                      
 name: {
     type: String
 },
-address: {
+tags: {
+    shop :{
+       type: String
+    },
+    name :{
     type: String
-},
-types: {
-    type: [
-        String
-    ]
-},
-coordinates: {
-
-    lat: {
-       type: Number
     },
-    lng: {
-        type: Number
-    }
-},
-rating: {
-    type: Number
-},
-rating_n: {
-    type: Number
-},
-populartimes: {
-    name: {
-        type: String
-    },
+        
     data: {
         type: Array
     }
-
+    
 },
-covidcases: {
-   type: Number,
-    default: '0'
-}
 
     },{ collection: 'stores' }
  )
