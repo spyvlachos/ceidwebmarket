@@ -7,7 +7,7 @@ id: {
 name: {
     type: String
 },
-populartimes: {
+tags: {
     name: {
         type: String
     },
@@ -16,9 +16,8 @@ populartimes: {
     }
 },
 
-    },{ collection: 'stores' }
+    },{ collection: 'market' }
  )
 
-
-const Stores = mongoose.model('StoreSchema', StoreSchema);
-module.exports = Stores;
+const subcategories = mongoose.model('StoreSchema', StoreSchema);
+module.exports = subcategories;
