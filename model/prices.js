@@ -12,7 +12,7 @@ prices: {
         type: String
     },
     price: {
-        type: String
+        type: Number
     }
 },
 
