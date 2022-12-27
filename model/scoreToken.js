@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const scoreTokenSchema = new mongoose.Schema({
 id: {
     type : String
-}    
+},   
 userId: {
     type: String
 },                                   
