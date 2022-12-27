@@ -24,7 +24,7 @@ scoreValue: {
         
 },
 
-    },{ collection: 'scores' }
+    },{ collection: 'scoreTokens' }
  )
 
 
