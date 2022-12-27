@@ -22,7 +22,7 @@ scoreValue: {
       default: now()
   }
         
-},
+
 
     },{ collection: 'scoreTokens' }
  )
