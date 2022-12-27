@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const MongoClient = require("mongodb").MongoClient;
-const dbname = 'webUsers';
+const dbname = 'market';
 const connectDB = async () => {
     try {
-        const con = await mongoose.connect("mongodb://localhost:27017/webUsers", {
+        const con = await mongoose.connect("mongodb://localhost:27017/market", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             
