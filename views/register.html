@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="header">
+      <div>Covid<span>Tracker</span></div>
+    </div>
+    <div class="container">
+    <h1>Registration</h1>
+    <form id="reg-form">
+      <input type="text" autocomplete="off" id="username" placeholder="Username" />
+      <input type="password" autocomplete="off" id="password" placeholder="Password" />
+      <input type="text" autocomplete="off" id="email" placeholder="email" />
+      <input type="submit" value="Submit Form" />
+      <a href="./login.html"><button type="button" id="log in">log in</button></a>
+    
+      
+    </form>
+    </div>
+
+    <script>
+      const form = document.getElementById('reg-form')
+      form.addEventListener('submit', registerUser)
+
+      async function registerUser(event) {
+      event.preventDefault()
+      const username = document.getElementById('username').value
+      const password = document.getElementById('password').value
+      const email = document.getElementById('email').value
+
+      const result = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+      username,
+      password,
+      email
+      })
+      }).then((res) => res.json())
+
+      if (result.status === 'ok') {
+      // everythign went fine
+      alert('Success')
+      } else {
+      alert(result.error)
+      }
+      }
+    </script>
+  </body>
+</html>

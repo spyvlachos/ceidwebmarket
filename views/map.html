@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        var map_init = L.map('map', {
+            center: [9.0820, 8.6753],
+            zoom: 8
+        });
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map_init);
+        L.Control.geocoder().addTo(map_init);
+        if (!navigator.geolocation) {
+            console.log("Your browser doesn't support geolocation feature!")
+        } else {
+            setInterval(() => {
+                navigator.geolocation.getCurrentPosition(getPosition)
+            }, 5000);
+        };
+        var marker, circle, lat, long, accuracy;
+
+        function getPosition(position) {
+            // console.log(position)
+            lat = position.coords.latitude
+            long = position.coords.longitude
+            accuracy = position.coords.accuracy
+
+            if (marker) {
+                map_init.removeLayer(marker)
+            }
+
+            if (circle) {
+                map_init.removeLayer(circle)
+            }
+
+            marker = L.marker([lat, long])
+            circle = L.circle([lat, long], { radius: accuracy })
+
+            var featureGroup = L.featureGroup([marker, circle]).addTo(map_init)
+
+           // map_init.fitBounds(featureGroup.getBounds())
+
+            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+
+
+
+
+            var marker = L.marker([38.2376827, 21.7259359]).addTo(map_init); 
+    marker.bindPopup("<b>Flocafe</b>")
+    var marker = L.marker([38.23771229999999,21.72594149999999]).addTo(map_init); 
+    marker.bindPopup("<b>Libido</b>")
+    var marker = L.marker([38.23679099999999,21.7259139]).addTo(map_init); 
+    marker.bindPopup("<b>Petite Boutique</b>")
+    var marker = L.marker([38.2379767,21.7259916]).addTo(map_init); 
+    marker.bindPopup("<b>Goody's Burger House</b>")
+    var marker = L.marker([38.2315032,21.7296407]).addTo(map_init); 
+    marker.bindPopup("<b>Η Καλή,Καρβελά Καλιρρόη</b>")
+    var marker = L.marker([38.23240670000001,21.730495]).addTo(map_init); 
+    marker.bindPopup("<b>Φούρνος Δημητρόπουλος</b>")
+    var marker = L.marker([38.23157129999999,21.7293953]).addTo(map_init); 
+    marker.bindPopup("<b>DIVINE CAFE</b>")
+    var marker = L.marker([38.2346426,21.7252919]).addTo(map_init); 
+    marker.bindPopup("<b>Ena Cash And Carry</b>")
+    var marker = L.marker([38.233859,21.7251125]).addTo(map_init); 
+    marker.bindPopup("<b>Lazaridis, J., Ltd</b>")
+    var marker = L.marker([38.23485300000001,21.7243963]).addTo(map_init); 
+    marker.bindPopup("<b>Patras' South Park - Notio Parko Patras</b>")
+    var marker = L.marker([38.2349755,21.72532379999999]).addTo(map_init); 
+    marker.bindPopup("<b>Coffeebox Str</b>")
+    var marker = L.marker([38.2317336,21.72934619999999]).addTo(map_init); 
+    marker.bindPopup("<b>Butcher Cacoyannis</b>")
+    var marker = L.marker([38.2338052,21.725142]).addTo(map_init); 
+    marker.bindPopup("<b>GroupTime Fitness</b>")
+    var marker = L.marker([38.23433560000001,21.7257251]).addTo(map_init); 
+    marker.bindPopup("<b>Κωτσόπουλος,Ευθυγραμισεις</b>")
+    var marker = L.marker([38.2361853,21.7301181]).addTo(map_init); 
+    marker.bindPopup("<b>CyberArena Internet Cafe</b>")
+    var marker = L.marker([38.23481719999999,21.7298984]).addTo(map_init); 
+    marker.bindPopup("<b>Car wash elefante</b>")
+    var marker = L.marker([38.2299034,21.7262048]).addTo(map_init); 
+    marker.bindPopup("<b>Φραγκάκης ΟΕ</b>")
+    var marker = L.marker([38.2294601,21.73060079999999]).addTo(map_init); 
+    marker.bindPopup("<b>AlfaEstiasi</b>")
+    var marker = L.marker([38.2303443,21.7279804]).addTo(map_init); 
+    marker.bindPopup("<b>liberis ψωμι-καφες-γλυκο</b>")
+    var marker = L.marker([38.2297166,21.7302191]).addTo(map_init); 
+    marker.bindPopup("<b>Paris house 2</b>")
+    var marker = L.marker([38.2297166,21.7302191]).addTo(map_init); 
+    marker.bindPopup("<b>Paris house 1</b>")   
+    var marker = L.marker([38.2373882,21.7263741]).addTo(map_init); 
+    marker.bindPopup("<b>JUMBO</b>")    
+    var marker = L.marker([38.2359621,21.7270514]).addTo(map_init);
+    marker.bindPopup("<b>Subaru Service - Παπανδρέου Παναγιώτης</b>")    
+    var marker = L.marker([38.2387705,21.7306217]).addTo(map_init); 
+    marker.bindPopup("<b>ΑΡΤΟΓΕΥΣΕΙΣ ΑΝΔΡΙΚΟΠΟΥΛΟΣ ΧΑΡ. & ΣΙΑ Ο.E</b>")
+    var marker = L.marker([38.238876,21.730667]).addTo(map_init); 
+    marker.bindPopup("<b>Αχαϊκή Διαχειριστική (Επαγγ. Καθαρισμοί)</b>")   
+    var marker = L.marker([38.23646749999999,21.7302342]).addTo(map_init); 
+    marker.bindPopup("<b>Theodosiou</b>")   
+    var marker = L.marker([38.2333467,21.72667019999999]).addTo(map_init); 
+    marker.bindPopup("<b>Αρτο...Ποίηση</b>")  
+    var marker = L.marker([38.2373518,21.7303909]).addTo(map_init); 
+    marker.bindPopup("<b>www.abbyspaws.gr</b>")   
+    var marker = L.marker([38.2373118,21.7302905]).addTo(map_init); 
+    marker.bindPopup("<b>Coffee stay</b>")    
+    var marker = L.marker([38.2373118,21.7302905]).addTo(map_init); 
+    marker.bindPopup("<b>CHEINOPOROS PANAGIOTIS</b>")
+    var marker = L.marker([38.23407700000001, 21.727605]).addTo(map_init); 
+    marker.bindPopup("<b>Δ.ΕΠΙΣΚΕΥΑΣΤΙΚΗ</b>")
+    var marker = L.marker([38.2331756, 21.72813919999999]).addTo(map_init); 
+    marker.bindPopup("<b>The Bright Star</b>")
+    var marker = L.marker([38.2341489, 21.7279444]).addTo(map_init); 
+    marker.bindPopup("<b>Coffee Island</b>")
+    var marker = L.marker([38.2333117, 21.7270617]).addTo(map_init); 
+    marker.bindPopup("<b>Σταματόπουλος Βασίλειος - Ο Γερμανός</b>")
+    var marker = L.marker([38.2393434, 21.7283489]).addTo(map_init); 
+    marker.bindPopup("<b>ComTech Systems Pc-Δίκτυα-Software-Service</b>")
+    var marker = L.marker([38.2397708, 21.7266125]).addTo(map_init); 
+    marker.bindPopup("<b>House Art - Είδη Διακόσμησης - Αυτοκόλλητα, ταπετσαρίες, πίνακες & παραβάν</b>")
+    var marker = L.marker([38.23773599999999, 21.72625249999999]).addTo(map_init); 
+    marker.bindPopup("<b>Media Markt Πάτρα</b>")
+    var marker = L.marker([38.23881739999999, 21.7251731]).addTo(map_init); 
+    marker.bindPopup("<b>ΝΑΥΤΙΚΟΣ ΟΜΙΛΟΣ ΠΑΤΡΩΝ</b>")
+    var marker = L.marker([38.240273, 21.7334759]).addTo(map_init); 
+    marker.bindPopup("<b>Vasiliki Andrikopoulou</b>")
+    var marker = L.marker([38.2360767, 21.7337615]).addTo(map_init); 
+    marker.bindPopup("<b>Galaxias</b>")
+    var marker = L.marker([38.2365135, 21.7328594]).addTo(map_init); 
+    marker.bindPopup("<b>Axizei</b>")
+    var marker = L.marker([38.2366599, 21.7333179]).addTo(map_init); 
+    marker.bindPopup("<b>Edgy Cuts</b>")
+    var marker = L.marker([38.2332736, 21.7338762]).addTo(map_init); 
+    marker.bindPopup("<b>Καφέ Πνύκα</b>")
+    var marker = L.marker([38.232962, 21.732502]).addTo(map_init); 
+    marker.bindPopup("<b>Αχαϊκό Εντελβάις</b>")
+    var marker = L.marker([38.233711, 21.7328662]).addTo(map_init); 
+    marker.bindPopup("<b>ΝΤΟΥΒΑΣ ΑΘΑΝΑΣΙΟΣ</b>")
+    var marker = L.marker([38.2370436, 21.7369206]).addTo(map_init); 
+    marker.bindPopup("<b>The Juice Bar</b>")
+    var marker = L.marker([38.2308628, 21.7427149]).addTo(map_init); 
+    marker.bindPopup("<b>Κοσμοπουλος Θεοφάνης&Γεώργιος</b>")
+    var marker = L.marker([38.2310536, 21.7431452]).addTo(map_init); 
+    marker.bindPopup("<b>PHARMACY Damvounelis G. Kon / nos</b>")
+    var marker = L.marker([38.230732, 21.742805]).addTo(map_init); 
+    marker.bindPopup("<b>WODBOX</b>")
+    var marker = L.marker([38.2316211, 21.7434209]).addTo(map_init); 
+    marker.bindPopup("<b>Ευθυγραμμίσεις Μπαρδάκης</b>")
+    var marker = L.marker([38.2339731, 21.7402237]).addTo(map_init); 
+    marker.bindPopup("<b>ΦΙΛΙΠΠΟΣ ΑΛΕΥΡΑ-ΜΠΑΧΑΡΙΚΑ-ΖΩΟΤΡΟΦΕΣ</b>")
+    var marker = L.marker([38.2350382, 21.735943]).addTo(map_init); 
+    marker.bindPopup("<b>Theos, Lambros, & Co. O.E.</b>")
+    var marker = L.marker([38.2390031, 21.7249076]).addTo(map_init); 
+    marker.bindPopup("<b>Κολυμβητήριο ΝΟΠ (Nautical Club of Patras)</b>")
+    var marker = L.marker([38.23710729999999, 21.7438912]).addTo(map_init); 
+    marker.bindPopup("<b>SPORTS HOUSE</b>")
+    var marker = L.marker([38.2372635, 21.7433585]).addTo(map_init); 
+    marker.bindPopup("<b>Ζαχαροπλαστείο Γιώργος</b>")
+    var marker = L.marker([38.2296495, 21.7412741]).addTo(map_init); 
+    marker.bindPopup("<b>Piraeus Bank</b>")
+    var marker = L.marker([ 38.2362059, 21.7399308]).addTo(map_init); 
+    marker.bindPopup("<b>Σχολή Οδηγών - Δώρα Κ. Γιαννακοπούλου</b>")
+    var marker = L.marker([38.2359271, 21.7399551]).addTo(map_init); 
+    marker.bindPopup("<b>Gitsis Konstantinos</b>")
+    var marker = L.marker([38.23845540000001, 21.7395409]).addTo(map_init); 
+    marker.bindPopup("<b>Way Out Cafe</b>")
+    var marker = L.marker([38.2381785, 21.73845210000001]).addTo(map_init); 
+    marker.bindPopup("<b>DERMATOLOGOS GIANNAKOPOULOS Patras KOSTAS</b>")
+    var marker = L.marker([38.2381317, 21.7395629]).addTo(map_init); 
+    marker.bindPopup("<b>Kokkonis Bros O.E.</b>")
+    var marker = L.marker([38.2358026, 21.7419403]).addTo(map_init); 
+    marker.bindPopup("<b>Πλατεία Ελευθερίας (Μικράς Ασίας)</b>")
+    var marker = L.marker([38.2300179, 21.7407132]).addTo(map_init); 
+    marker.bindPopup("<b>Πλυντήριο αυτοκινήτων (self service)</b>")
+    var marker = L.marker([38.22967259999999, 21.7411852]).addTo(map_init); 
+    marker.bindPopup("<b>Φροντιστήριο Φάσμα</b>")
+    var marker = L.marker([38.23973549999999, 21.7423175]).addTo(map_init); 
+    marker.bindPopup("<b>Moccup</b>")
+    var marker = L.marker([38.2331948, 21.745112]).addTo(map_init); 
+    marker.bindPopup("<b>Max Perry</b>")
+    var marker = L.marker([38.23302, 21.7450344]).addTo(map_init); 
+    marker.bindPopup("<b>Et Cafe</b>")
+    var marker = L.marker([38.233572, 21.7455452]).addTo(map_init); 
+    marker.bindPopup("<b>Coffee Amargo</b>")
+    var marker = L.marker([38.2337199, 21.7457107]).addTo(map_init); 
+    marker.bindPopup("<b>Opap play Γ. Παπανδρεου 49</b>")
+    var marker = L.marker([38.2337265, 21.7454872]).addTo(map_init); 
+    marker.bindPopup("<b>Kokois George</b>")
+    var marker = L.marker([38.23566259999999, 21.7460654]).addTo(map_init); 
+    marker.bindPopup("<b>Eurobank</b>")
+    var marker = L.marker([38.2363018, 21.7458576]).addTo(map_init); 
+    marker.bindPopup("<b>ΕΙΔΙΚΗ ΘΕΡΑΠΕΥΤΙΚΗ ΠΑΡΕΜΒΑΣΗ - Λογοθεραπεία, Λογοθεραπευτές Πάτρα - Σακκογιάννη Ράνια</b>")
+    var marker = L.marker([38.2393423, 21.7453243]).addTo(map_init); 
+    marker.bindPopup("<b>Flocafe</b>")
+    var marker = L.marker([38.2387101, 21.7452574]).addTo(map_init); 
+    marker.bindPopup("<b>Coffeebrands</b>")
+    var marker = L.marker([38.23815349999999, 21.7453787]).addTo(map_init); 
+    marker.bindPopup("<b>Cooper Coffee & Snack</b>")
+    var marker = L.marker([38.2378572, 21.7447693]).addTo(map_init); 
+    marker.bindPopup("<b>Kotsokolos Konstantinos</b>")
+    var marker = L.marker([38.2326975, 21.7307916]).addTo(map_init); 
+    marker.bindPopup("<b>εν σωματι</b>")
+    var marker = L.marker([38.23253649999999, 21.7311391]).addTo(map_init); 
+    marker.bindPopup("<b>AutoSport</b>")
+    var marker = L.marker([38.2324011, 21.7295204]).addTo(map_init); 
+    marker.bindPopup("<b>Cafe Ανδρέας</b>")
+    var marker = L.marker([38.2313294, 21.7315513]).addTo(map_init); 
+    marker.bindPopup("<b>Πασαγιάννης Όμηρος</b>")
+    var marker = L.marker([38.2343377, 21.7259251]).addTo(map_init); 
+    marker.bindPopup("<b>Patras Moto Technology</b>")
+    var marker = L.marker([38.2293827, 21.727438]).addTo(map_init); 
+    marker.bindPopup("<b>ΚΟΥΝΑΒΗΣ ΑΝΔΡΕΑΣ</b>")
+    var marker = L.marker([38.2357848, 21.7300455]).addTo(map_init); 
+    marker.bindPopup("<b>MY COFFEE</b>")
+    var marker = L.marker([38.2357305, 21.7278594]).addTo(map_init); 
+    marker.bindPopup("<b>Μπουκέτο Μπαλόνια</b>")
+    var marker = L.marker([38.23571010000001, 21.7278575]).addTo(map_init); 
+    marker.bindPopup("<b>auto giannakopoulos</b>")
+    var marker = L.marker([38.2378785, 21.7305419]).addTo(map_init); 
+    marker.bindPopup("<b>Ανδρικόπουλος Super Market</b>")
+    var marker = L.marker([38.2367694, 21.7303194]).addTo(map_init); 
+    marker.bindPopup("<b>NIKOLOPOULOS PANAGIOTIS TO PARADOSIAKO PSOMI</b>")
+    var marker = L.marker([38.2334675, 21.7267902]).addTo(map_init); 
+    marker.bindPopup("<b>Pet Beauty G.S.</b>")
+    var marker = L.marker([38.2325802, 21.7271952]).addTo(map_init); 
+    marker.bindPopup("<b>Carspa</b>")
+    var marker = L.marker([38.2331756, 21.72813919999999]).addTo(map_init); 
+    marker.bindPopup("<b>Το Φωτεινό Αστέρι</b>")
+    var marker = L.marker([38.2326749, 21.72816259999999]).addTo(map_init); 
+    marker.bindPopup("<b>Σκλαβενίτης</b>")
+    var marker = L.marker([38.2392673, 21.7262653]).addTo(map_init); 
+    marker.bindPopup("<b>My market</b>")
+    var marker = L.marker([38.2397484, 21.7333301]).addTo(map_init); 
+    marker.bindPopup("<b>nias hair art</b>")
+    var marker = L.marker([38.2290611, 21.7343507]).addTo(map_init); 
+    marker.bindPopup("<b>La Taste Ζαχαροπλαστείο</b>")
+    var marker = L.marker([38.23284700000001, 21.7317312]).addTo(map_init); 
+    marker.bindPopup("<b>Play Opap Ε. Βενιζέλου 65</b>")
+    var marker = L.marker([38.2330242, 21.7323019]).addTo(map_init); 
+    marker.bindPopup("<b>Micromed Διαγνωστικά</b>")
+    var marker = L.marker([38.23256370000001, 21.74072280000001]).addTo(map_init); 
+    marker.bindPopup("<b>ΓΑΣΠΑΡΙΝΑΤΟΥ ΠΑΥΛΙΝΑ ΘΕΟΦΑΝΗΣ</b>")
+    var marker = L.marker([38.23728699999999, 21.736776]).addTo(map_init); 
+    marker.bindPopup("<b>Μπαρμπέρικο - Barber Shop</b>")
+    var marker = L.marker([38.23710550000001, 21.7369131]).addTo(map_init); 
+    marker.bindPopup("<b>Πέντε Δρόμοι</b>")
+    var marker = L.marker([38.2400806, 21.736366]).addTo(map_init); 
+    marker.bindPopup("<b>Andrikópoulos</b>")
+    var marker = L.marker([38.2378692, 21.7444974]).addTo(map_init); 
+    marker.bindPopup("<b>Ανδρικοπουλος Super Market</b>")
+    var marker = L.marker([38.2387755, 21.7436722]).addTo(map_init); 
+    marker.bindPopup("<b>Γιαννης Χριστοπουλος ΚΡΕΟΠΩΛΕΙΟ</b>")
+    var marker = L.marker([38.2364033, 21.7441721]).addTo(map_init); 
+    marker.bindPopup("<b>Building Cleaning - ESTIA</b>")
+    var marker = L.marker([38.2364395, 21.7400384]).addTo(map_init); 
+    marker.bindPopup("<b>Areti Textile</b>")
+    var marker = L.marker([38.2372047, 21.7399468]).addTo(map_init); 
+    marker.bindPopup("<b>Happytails</b>")
+    var marker = L.marker([38.2380662, 21.739193]).addTo(map_init); 
+    marker.bindPopup("<b>Nina Cafe Bar</b>")
+    var marker = L.marker([38.2380054, 21.73934999999999]).addTo(map_init); 
+    marker.bindPopup("<b>Hardwarestore.gr Χρωματοπωλείο Κωνσταντέλλος</b>")
+    var marker = L.marker([38.235325, 21.741015]).addTo(map_init); 
+    marker.bindPopup("<b>Σαπουναρία Πάτρας (S.P)</b>")
+    var marker = L.marker([38.2331936, 21.7431569]).addTo(map_init); 
+    marker.bindPopup("<b> ΛΕΩΝΙΔΑΣ &  300</b>")
+    var marker = L.marker([38.2338846, 21.7458634]).addTo(map_init); 
+    marker.bindPopup("<b>Coffee Lab ΠΑΠΑΝΔΡΕΟΥ 49 ΠΑΤΡΑ</b>")
+    var marker = L.marker([38.2330385, 21.744757]).addTo(map_init); 
+    marker.bindPopup("<b>elastika falieris TROXOEXPRESS</b>")
+    var marker = L.marker([38.2365668, 21.7460363]).addTo(map_init); 
+    marker.bindPopup("<b>Kafekouti</b>")
+    var marker = L.marker([38.23405150000001, 21.7457064]).addTo(map_init); 
+    marker.bindPopup("<b>Μυλωνάς Ζαχαροπλαστείο</b>")
+    var marker = L.marker([38.239739, 21.7458183]).addTo(map_init); 
+    marker.bindPopup("<b>Δακόλα Αγγελική </b>")
+    var marker = L.marker([38.2385156, 21.7444552]).addTo(map_init); 
+    marker.bindPopup("<b>Tip Top</b>")
+    var marker = L.marker([38.2384409, 21.7446494]).addTo(map_init); 
+    marker.bindPopup("<b>Moto Shop Sotirios Andreou</b>")
+    var marker = L.marker([38.2377884, 21.7451985]).addTo(map_init); 
+    marker.bindPopup("<b>ΖΕΛΕΚΤ ΑΕ</b>")
+    var marker = L.marker([38.2381883, 21.7446046]).addTo(map_init); 
+    marker.bindPopup("<b>Marouda square</b>")
+    var marker = L.marker([38.23776830000001, 21.7452253]).addTo(map_init); 
+    marker.bindPopup("<b>Zelekt S.A.</b>")
+
+
+
+
+
+
+
+
+
+
+        }
+    </script>
+</body>
+
+</html>

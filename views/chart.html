@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Login FOrm</title>
+   
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+</head>
+<body>
+	<div class="header">
+		<div>Covid<span>Tracker</span></div>
+	</div>
+    
+    <div class="container">
+        <h2>chart</h2>
+        <input type="submit" value="Submit Form" />
+        
+<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+
+
+           </div>
+            
+        </form>
+    </div>
+    <script>
+
+
+var myChart = new Chart("myChart", {
+    type: "scatter",
+    data: {
+    datasets: [{
+      pointRadius: 4,
+      pointBackgroundColor: "rgb(0,0,255)",
+      data: values
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      xAxes: [{ticks: {min: 40, max:160}}],
+      yAxes: [{ticks: {min: 6, max:16}}],
+    }
+  }
+});
+
+const form = document.getElementById('log-form')
+			form.addEventListener('submit', login)
+
+			async function login(event) {
+				event.preventDefault()
+				
+
+				var result = await fetch('/api/chart', {
+					method: 'GET'
+					
+				}).then((res) => res.json())
+                .then(data =>{
+                    data.forEach(element => {
+                        var values
+                    });
+                })
+
+				if (result.status === 'ok') {
+				
+					console.log('Got the token: ', result.data)
+					localStorage.setItem('token', result.data)
+					// alert('Success')
+					window.location.replace("./adminhome.html");
+				} else {
+					alert(result.error)
+				}
+			}
+    </script>
+</body>
+</html>

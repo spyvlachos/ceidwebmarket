@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+}
+#livesearch {
+    background-color: gainsboro;
+    border-color: black;
+    border-width: thin;
+    border-style: solid;
+    width: 170px;
+
+}
+.hide{
+    display: none;
+}
+a:link,a:hover,a:visited,a:active{
+    color: black;
+}

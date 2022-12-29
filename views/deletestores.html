@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>storesearch</title>
+	<link rel="stylesheet" href = "styles.css"/>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+		<h1>delete store</h1>
+		<form id="reg-form">
+			<input type="storename" autocomplete="off" id="storename" placeholder="storename" />
+			<div id = "livesearch" class = "hide">this</div>
+			<input type="submit" value="Submit Form" />
+		</form>
+		<div id="txt-hint"></div>
+		<script> 
+      const form = document.getElementById('reg-form')
+			form.addEventListener('submit', registerUser)
+	  
+			async function registerUser(event) {
+			event.preventDefault()
+			const name = document.getElementById('storename').value
+
+      const result = await fetch('/api/deletestore', {
+      method: 'DELETE',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+      name
+      })
+      }).then((res) => res.json())
+
+      if (result.status === 'ok') {
+      // everythign went fine
+      alert('Success')
+      } else {
+      alert(result.error)
+      }
+		}
+			</script>
+
+</body>  
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+    <h1>add store</h1>
+    <form id="reg-form">
+      <input type="text" autocomplete="off" id="type" placeholder="type" />
+      <input type="text" autocomplete="off" id="id" placeholder="id" />
+      <input type="text" autocomplete="off" id="lat" placeholder="lat" />
+      <input type="text" autocomplete="off" id="lon" placeholder="lon" />
+      <input type="text" autocomplete="off" id="name" placeholder="name" />
+      <input type="text" autocomplete="off" id="shop" placeholder="shop" />
+      <input type="submit" value="Submit Form" />
+     
+    
+      
+    </form>
+    </div>
+
+    <script>
+      const form = document.getElementById('reg-form')
+      form.addEventListener('submit', registerStore)
+
+      async function registerStore(event) {
+      event.preventDefault()
+      const type = document.getElementById('type').value
+      const id = document.getElementById('id').value
+       const lat = document.getElementById('lat').value 
+      const lon = document.getElementById('lon').value 
+      const name = document.getElementById('name').value
+      const shop = document.getElementById('shop').value
+
+      const result = await fetch('/api/addStores', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+     type,  id,  lat, lon, name, shop
+      })
+      }).then((res) => res.json())
+
+      if (result.status === 'ok') {
+      // everythign went fine
+      alert('Success')
+      } else {
+      alert(result.error)
+      }
+      }
+    </script>
+  </body>
+</html>

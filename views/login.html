@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="main.css">
+    <title>Login FOrm</title>
+   
+</head>
+<body>
+	<div class="header">
+		<div>Covid<span>Tracker</span></div>
+	</div>
+    
+    <div class="container">
+        <h2>Login</h2>
+        <form id="log-form" >
+           <input type="text" autocomplete="off" id="username" placeholder="Username" />
+			<input type="password" autocomplete="off" id="password" placeholder="Password" />
+			<input type="submit" value="Submit Form" />
+            <a href="./register.html"><button type="button" id="sign-up">Sign Up</button></a>
+           </div>
+            
+        </form>
+    </div>
+    <script>
+      const form = document.getElementById('log-form')
+			form.addEventListener('submit', login)
+
+			async function login(event) {
+				event.preventDefault()
+				const username = document.getElementById('username').value
+				const password = document.getElementById('password').value
+
+				const result = await fetch('/api/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						username,
+						password
+					})
+				}).then((res) => res.json())
+
+				if (result.status === 'ok') {
+				
+					console.log('Got the token: ', result.data)
+					localStorage.setItem('token', result.data)
+					// alert('Success')
+					window.location.replace("./userhome.html");
+				} else {
+					alert(result.error)
+				}
+			}
+    </script>
+</body>
+</html>
