@@ -238,26 +238,12 @@ application.get('/api/chart', async (req,res)=>{
 
 
 application.post('/api/addStores', async (req, res) => {
-    const { name, address,
-        //types,
-       // coordinates,
-        rating, rating_n,
-        //populartimes 
+    const { type, id,lat,lon,name ,shop
+        
     } = req.body
-
-
-
-    
-   
     try {
         const responce = await Store.create({
-            name,
-            address,
-           // types,
-         //   coordinates,
-            rating,
-            rating_n,
-           // populartimes
+            type, id,lat,lon,name ,shop
         })
         console.log('User created:', responce)
     } catch (error) {
@@ -269,7 +255,6 @@ application.post('/api/addStores', async (req, res) => {
 
     res.json({ status: 'ok' })
 })
-
 
 application.post('/api/storedata', async (req, res) => {
     let storename = req.body.storename;
