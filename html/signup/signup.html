@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="login.css" rel="stylesheet">
+  <link href="signup.css" rel="stylesheet">
 
 <title>Page Title</title>
 </head>
@@ -10,19 +10,24 @@
   
   <img id = "logo" src="cart.png">
 
+  <div  id = "email" >
+    <input type="text" class="rectangleForEmail" value="Enter email" id="inputUsernameField" onfocus="clearText(this)">
+</div>
+
 <div  id = "username" >
     <input type="text" class="rectangleForUsername" value="Enter username" id="inputUsernameField" onfocus="clearText(this)">
 </div>
 
 <div  id = "password" >
   <input type="password" class="rectangleForPassword" value="Enter password" id="inputUsernameField" onfocus="clearText(this)">
+  <p id = "passwordText"> Password must contain </p>
 </div>
 
 
-<button class="rectangleForLogIn"> Log In</button>
+<button id="rectangleForSignUp"> Sign up</button>
 </div>
 
-<button id="buttonForSignUp" type="button">If you don't have an account sign up</button>
+
 
 <!-- when click on inputs clear previous input -->
 <script>
