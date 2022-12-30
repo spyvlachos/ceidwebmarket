@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="main.css">
+     <link href="login.css" rel="stylesheet">
     <title>Login FOrm</title>
    
 </head>
 <body>
-	<div class="header">
-		<div>Covid<span>Tracker</span></div>
-	</div>
+	<body style= "background-color: #D9D9D9;">
+  
+		<img id = "logo" src="cart.png">
+
     
     <div class="container">
-        <h2>Login</h2>
+     <!---   <h2>Login</h2> -->
         <form id="log-form" >
-           <input type="text" autocomplete="off" id="username" placeholder="Username" />
-			<input type="password" autocomplete="off" id="password" placeholder="Password" />
-			<input type="submit" value="Submit Form" />
-            <a href="./register.html"><button type="button" id="sign-up">Sign Up</button></a>
+          <div id="username">
+			<input class="rectangleForUsername" type="text" autocomplete="off" id="username" placeholder="Username" /> </div>
+			<div  id = "password" >	<input class="rectangleForPassword" type="password" autocomplete="off" id="password" placeholder="Password" /> </div>
+			<input class="rectangleForLogIn" type="submit" value="Submit Form" />
+            <a href="./register.html"><button type="button" id="buttonForSignUp" >Sign Up</button></a>
            </div>
             
         </form>
