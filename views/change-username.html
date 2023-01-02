@@ -3,15 +3,18 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" href="change.css">
 		<title>Document</title>
 	</head>
 	<body>
 		<div class="container">
 		<h1>Change username</h1>
+		
 		<form id="reg-form">
-			<input type="text" autocomplete="off" id="username" placeholder="username" />
-			<input type="submit" value="Submit Form" />
+			<input type="text" autocomplete="off" id="username" placeholder="new username" />
+			<input type="submit" value="Change username" />
+
+			<button onclick="goBack()" id="backButton"><img src="back.png" width="50" height="50"> </button>
 		</form>
 		</div>
 
@@ -41,6 +44,10 @@
 					alert(result.error)
 				}
 			}
+
+			function goBack() {
+  		  window.history.back();
+  			}
 		</script>
 	</body>
 </html>           

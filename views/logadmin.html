@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="login.css">
     <title>Login FOrm</title>
    
 </head>
 <body>
-	<div class="header">
-		<div>Covid<span>Tracker</span></div>
-	</div>
+
+
+	<body style= "background-color: #D9D9D9;">
+  
+		<img id = "logo" src="admin.png">
+
     
     <div class="container">
-        <h2>Login admin</h2>
+     <!---   <h2>Login</h2> -->
         <form id="log-form" >
-           <input type="text" autocomplete="off" id="username" placeholder="Username" />
-			<input type="password" autocomplete="off" id="password" placeholder="Password" />
-			<input type="submit" value="Submit Form" />
-            <a href="./index.html"><button type="button" id="sign-up">go back</button></a>
+          <div id="username">
+			<input class="rectangleForUsername" type="text" value="Enter username" autocomplete="off" id="username"  onfocus="clearText(this)" /> </div>
+			<div  id = "password" >	<input class="rectangleForPassword" value="Enter password" type="password" autocomplete="off" id="password" onfocus="clearText(this)"/> </div>
+			<input class="rectangleForLogIn" type="submit" value="Log in" />
            </div>
             
         </form>
+
+
     </div>
     <script>
       const form = document.getElementById('log-form')
@@ -54,6 +59,14 @@
 					alert(result.error)
 				}
 			}
+
+			<!-- when click on inputs clear previous input -->
+
+	  		function clearText(element) {
+   					 element.value = "";
+  					}
     </script>
+
+	
 </body>
 </html>

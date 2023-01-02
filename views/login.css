@@ -5,6 +5,15 @@
     position: relative;
     left: 525px;
   }
+
+  #adminLogo{
+    margin: auto;
+    width: 400px;
+    height: 350px;
+    position: relative;
+    left: 530px;
+    
+  }
   
   .rectangleForUsername {
     margin: auto;

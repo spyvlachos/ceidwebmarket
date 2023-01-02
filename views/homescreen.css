@@ -1,0 +1,105 @@
+
+
+:root {
+    --random-color: #000000;
+  }
+  
+  body:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--random-color);
+    z-index: -1;
+    opacity: 0.5;
+  }
+
+
+  /* Style the side bar menu */
+#side-bar-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Set the width of the menu */
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    z-index: 1;
+    transition: left 0.5s ease;
+  }
+  
+  /* Style the menu items */
+  #side-bar-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #side-bar-menu li {
+    padding: 15px;
+  }
+  
+  #side-bar-menu li a {
+    color: #fff;
+    text-decoration: none;
+    position: relative; /* Make the element positionable */
+    top: 70px; /* Move the element down by 50 pixels */
+  }
+  
+ 
+  
+  /* Style the toggle button */
+  #menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    z-index: 2;
+    border: none;
+    
+  }
+
+ #buttons{
+
+    background: transparent ;
+    border: none;
+    font-size: 20px;
+    color:black;
+ }
+
+ /*table for admin*/
+ table {
+  width: 100%; /* Set the width of the table to 100% */
+  border-collapse: collapse; /* Collapse the borders of the table cells */
+  margin: 100px auto; 
+  margin-left: 70px; /* Add 50 pixels of space to the left of the table */
+}
+
+td, th {
+  border: 1px solid #ddd; /* Add a border to the cells */
+  padding: 8px; /* Add padding to the cells */
+  background-color: white;
+  min-width: 70px; /* Set the minimum width of the cells to 50 pixels */
+
+}
+
+
+th {
+  background-color: #804C4C ; /* Set the background color of the table header */
+  color: black; /* Set the text color of the table header */
+}
+
+h1 {
+  position: absolute; /* Use absolute positioning */
+  top: 0; /* Set the distance from the top of the screen to 0 */
+  transform: translate(-50%, 0); /* Adjust the position of the text to account for the left value */
+  left: 800px;
+}
+
+
+#logOutButton{
+  border: none;
+  background-color: transparent;
+  left: 54px;
+}

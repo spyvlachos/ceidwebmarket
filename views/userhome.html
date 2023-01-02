@@ -4,21 +4,59 @@
             <meta charset="UTF-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="stylesheet" href="main.css">
+                    <link rel="stylesheet" href="homescreen.css">
                         <title>home</title>
-   
-         </head>
-                    <body>
 
-                      <div class="container">
-                            <h2>welcome </h2>
+                       
 
-                            <a href="./change-password.html"><button type="button" id="changepass">change password</button></a>
-                             <a href="./change-username.html"><button type="button" id="changeusername">change username</button></a>
-                             <a href="./stores.html"><button type="button" id="changeusername">add covid case</button></a>
-                             <a href="./map.html"><button type="button" id="changeusername">map</button></a>
-                          </div> 
-               
+            <!-- The side bar menu -->
+          <div id="side-bar-menu">
+           <ul>
+          <li><a href="./change-password.html"><button type="button" id="buttons">change password</button></a></li>
+          <li><a href="./change-username.html"><button type="button" id="buttons">change username</button></a></li>
+          <li><a href="./map.html"><button type="button" id="buttons">map</button></a></li>
+          <li><a href="./login.html"><button type="button" id="buttons">log out</button></a></li>
+
+          </ul>
+          </div>
+  
+
+  
+            <!-- The toggle button for the side bar menu -->
+            <button id="menu-toggle"> <img src="home.png" width="50" height="50"> </button>
+
+
+
     
-</body>
-</html>
+          </body>
+
+
+            <script>
+
+                // Generate random color for background
+            function getRandomColor() {
+              var letters = '0123456789ABCDEF';
+              var color = '#';
+              for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+              }
+            
+              return color;
+            }
+
+            document.documentElement.style.setProperty('--random-color', getRandomColor());
+
+            // toggle button for menu
+            document.getElementById("menu-toggle").addEventListener("click", function() {
+              var sideBarMenu = document.getElementById("side-bar-menu");
+              var mainContent = document.getElementById("main-content");
+              if (sideBarMenu.style.left == "-250px") {
+                sideBarMenu.style.left = "0";
+                mainContent.style.marginLeft = "250px";
+              } else {
+                sideBarMenu.style.left = "-250px";
+                mainContent.style.marginLeft = "0";
+              }
+            });
+            </script>
+            </html>

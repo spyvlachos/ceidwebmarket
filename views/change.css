@@ -1,38 +1,29 @@
 /* Bordered form */
 
-* { font-family: 'Poppins' }
+* { font-family: 'Georgia' }
 
 
 body {
-    position: absolute;
+  position: absolute;
 	top: 40px;
 	left: 20px;
 	right: 20px;
-	
 	width: auto;
 	height: auto;
-  
-    background-image: url("background.jpg") ;
-    
-    background-size: cover;
-  
-    
+   background-size: cover;  
+   background-color: grey;
 }
 
 
 
  .container{
     padding: 100px;
-    width: 600px;
+    width: 300px;
     min-height: 100px;
     margin: 7% auto 0 auto;
     text-align: center;
-
-   
     background: linear-gradient(to bottom, rgba(180, 124, 120, 0.8) 0%, rgba(58, 40, 40, 0.6) 100%);
-   
-
-   
+    
  } 
 
 
@@ -40,25 +31,61 @@ body {
    h2 {
         font-size: 3em;
         font-weight: 100;
-        color: rgba(255, 255, 255, 0.7);
+        color: blue;
         display: block;
         text-align: center;
     
       }
 
- 
-   /*Set a style for all buttons */
-   button {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #93261e;
+
+      #password{
+
+        margin: auto;
+        width: 200px;
+        height: 50px;
+        background-color: #919995;
+        border-radius: 20px;
+        position: relative;
+        font-size: 21px; 
+        font-weight: bold;
+        color: #485E57;
+        top:-10px;
     
+      }
+
+
+      #username{
+        margin: auto;
+        width: 200px;
+        height: 50px;
+        background-color: #919995;
+        border-radius: 20px;
+        position: relative;
+        font-size: 21px; 
+        font-weight: bold;
+        color: #485E57;
+        top:-10px;
+      }
+ 
+
+      input[type=submit] {
+    border: none;
+    background-color: #121a17;
     color: white;
-   
+    padding: 12px 20px;
     margin: auto;
     cursor: pointer;
     display: block;
-    
+    width: 75%;
+   
+  }
+
+  #backButton{
+    border: none;
+    background-color: transparent;
+    position: absolute; /* Use absolute positioning */
+     top: 390px; /* Set the distance from the top of the containing element to 50 pixels */
+     margin-left: -40px;
   }
 
    

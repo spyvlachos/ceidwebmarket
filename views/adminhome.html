@@ -4,21 +4,91 @@
             <meta charset="UTF-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="stylesheet" href="main.css">
+                    <link rel="stylesheet" href="homescreen.css">
                         <title>home</title>
    
          </head>
-                    <body>
 
-                                    <div class="container">
-                            <h2>welcome administrator </h2>
+        <body style="background-color: white;">
+            <h1 class="h1">Leaderboard</h1>
+        <!--The leaderboard as mainscreen-->
+        <div id="leaderboard">
+        <table>
+            <tr>
+              <th  oninput="updateTable(event)">type</th>
+              <th  oninput="updateTable(event)">id</th>
+              <th  oninput="updateTable(event)">lat</th>
+              <th  oninput="updateTable(event)">lon</th>
+              <th  oninput="updateTable(event)">name</th>
+              <th  oninput="updateTable(event)">shop</th>
+            </tr>
+            <tr>
+                <td contenteditable oninput="updateTable(event)"></td>
+              <td contenteditable oninput="updateTable(event)"></td>
+                <td contenteditable oninput="updateTable(event)"></td>
+              <td contenteditable oninput="updateTable(event)"></td>
+            <td contenteditable oninput="updateTable(event)"></td>
+              <td contenteditable oninput="updateTable(event)"></td>
+            </tr>
+            <tr><td contenteditable oninput="updateTable(event)"></td>
+                <td contenteditable oninput="updateTable(event)"></td>
+                <td contenteditable oninput="updateTable(event)"></td>
+                <td contenteditable oninput="updateTable(event)"></td>
+              <td contenteditable oninput="updateTable(event)"></td>
+              <td contenteditable oninput="updateTable(event)"></td>
+            </tr>
+          </table>
+        </div>
 
-                            <a href="./change-password.html"><button type="button" id="changepass">change password</button></a>
-                             <a href="./change-username.html"><button type="button" id="changeusername">change username</button></a>
-                          <a href="./deletestores.html"><button type="button" id="stores">delete stores</button></a>
-                          <a href="./addstore.html"><button type="button" id="changeusername">add store</button></a>
-                          <a href="./chart.html"><button type="button" id="changeusername">chart</button></a>
-               
-                                </div>
-</body>
+
+        <!-- The side bar menu -->
+        <div id="side-bar-menu">
+            <ul>
+            <li><a href="./change-password.html"><button type="button" id="buttons">change password</button></a></li>
+            <li><a href="./change-username.html"><button type="button" id="buttons">change username</button></a></li>
+            <li><a href="./deletestores.html"><button type="button" id="buttons">delete stores</button></a></li> 
+            <li> <a href="./addstore.html"><button type="button" id="buttons">add store</button></a></li>
+            <li><a href="./chart.html"><button type="button" id="buttons">chart</button></a></li>
+            <li><a href="./logadmin.html"><button type="button" id="buttons">log out</button></a></li>
+            </ul>
+        </div>
+        
+
+        
+        <!-- The toggle button for the side bar menu -->
+        <button id="menu-toggle"> <img src="home.png" width="50" height="50"> </button>
+                                        
+        </body>
+
+<script>
+// toggle button for menu
+document.getElementById("menu-toggle").addEventListener("click", function() {
+  var sideBarMenu = document.getElementById("side-bar-menu");
+  var mainContent = document.getElementById("main-content");
+  if (sideBarMenu.style.left == "-250px") {
+    sideBarMenu.style.left = "0";
+    mainContent.style.marginLeft = "250px";
+  } else {
+    sideBarMenu.style.left = "-250px";
+    mainContent.style.marginLeft = "0";
+  }
+});
+
+
+
+var table = document.getElementById("leaderboard");
+// Loop through the rows of the table
+for (var i = 0; i < table.rows.length; i++) {
+    // Loop through the cells of the current row
+    for (var j = 0; j < table.rows[i].cells.length; j++) {
+      // Get the current cell
+      var cell = table.rows[i].cells[j];
+
+      // If the cell is empty, set its value to the default value
+      if (cell.innerHTML === "") {
+        cell.innerHTML = "N/A";
+      }
+    }
+  }
+</script>
 </html>
