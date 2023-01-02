@@ -12,15 +12,15 @@
         <body style="background-color: white;">
             <h1 class="h1">Leaderboard</h1>
         <!--The leaderboard as mainscreen-->
-        <div id="leaderboard">
-        <table>
+        <div >
+        <table id="leaderboard" contenteditable = "true">
             <tr>
-              <th  oninput="updateTable(event)">type</th>
-              <th  oninput="updateTable(event)">id</th>
-              <th  oninput="updateTable(event)">lat</th>
-              <th  oninput="updateTable(event)">lon</th>
-              <th  oninput="updateTable(event)">name</th>
-              <th  oninput="updateTable(event)">shop</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">type</th>
+              <th contenteditable = "false" oninput="updateTable(event)">id</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">lat</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">lon</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">name</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">shop</th>
             </tr>
             <tr>
                 <td contenteditable oninput="updateTable(event)"></td>
@@ -39,6 +39,7 @@
             </tr>
           </table>
         </div>
+        <button onclick="loadSupermarkets()">Load Data</button>
 
 
         <!-- The side bar menu -->
@@ -90,5 +91,82 @@ for (var i = 0; i < table.rows.length; i++) {
       }
     }
   }
+
+
+  
+  function loadSupermarkets(){
+
+
+    fetch('supermarkets.json')
+  .then(response => response.json())
+  .then(data => {
+    // get the table element
+    var table = document.getElementById('leaderboard');
+
+    // loop through the array of data
+    data.forEach(function(object) {
+      // create a new table row element
+      var row = document.createElement('tr');
+
+      // create a new table cell for each object property
+      var cell1 = document.createElement('td');
+      var cell2 = document.createElement('td');
+      var cell3 = document.createElement('td');
+      var cell4 = document.createElement('td');
+      var cell5 = document.createElement('td');
+      var cell6 = document.createElement('td');
+
+      
+
+  
+
+      // set the inner HTML for each cell
+      cell1.innerHTML = object.type;
+      var input = document.createElement('input');
+      
+
+      
+
+      cell2.innerHTML = object.id;
+      cell3.innerHTML = object.lat;
+      cell4.innerHTML = object.lon;
+      cell5.innerHTML = object.tags.name;
+      cell6.innerHTML = object.tags.shop;
+
+      // append the cells to the new row
+      row.appendChild(cell1);
+      row.appendChild(cell2);
+      row.appendChild(cell3);
+      row.appendChild(cell4);
+      row.appendChild(cell5);
+      row.appendChild(cell6);
+
+
+      // append the row to the table
+      table.appendChild(row);
+
+      editableTable();
+      
+    });
+  });
+  }
+			
+  function editableTable(){
+    // get the table element
+var table = document.getElementById('leaderboard');
+
+// loop through the rows and cells of the table
+for (var i = 0; i < table.rows.length; i++) {
+  var row = table.rows[i];
+  for (var j = 0; j < row.cells.length; j++) {
+    var cell = row.cells[j];
+    // get the cell value
+    var cellValue = cell.innerHTML;
+    // create an input element
+    var input = document.create
+  }
+}
+  }
+
 </script>
 </html>
