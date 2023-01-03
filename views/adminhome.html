@@ -22,24 +22,10 @@
               <th  contenteditable = "false" oninput="updateTable(event)">name</th>
               <th  contenteditable = "false" oninput="updateTable(event)">shop</th>
             </tr>
-            <tr>
-                <td contenteditable oninput="updateTable(event)"></td>
-              <td contenteditable oninput="updateTable(event)"></td>
-                <td contenteditable oninput="updateTable(event)"></td>
-              <td contenteditable oninput="updateTable(event)"></td>
-            <td contenteditable oninput="updateTable(event)"></td>
-              <td contenteditable oninput="updateTable(event)"></td>
-            </tr>
-            <tr><td contenteditable oninput="updateTable(event)"></td>
-                <td contenteditable oninput="updateTable(event)"></td>
-                <td contenteditable oninput="updateTable(event)"></td>
-                <td contenteditable oninput="updateTable(event)"></td>
-              <td contenteditable oninput="updateTable(event)"></td>
-              <td contenteditable oninput="updateTable(event)"></td>
-            </tr>
           </table>
         </div>
-        <button onclick="loadSupermarkets()">Load Data</button>
+        <button id ="loadData" onclick="loadSupermarkets()">Load Data</button>
+        <button id ="updateData" onclick="searchForUpdatedCell()">Update Data</button>
 
 
         <!-- The side bar menu -->
@@ -62,6 +48,10 @@
         </body>
 
 <script>
+
+let originalValues = [];
+let newValue;
+
 // toggle button for menu
 document.getElementById("menu-toggle").addEventListener("click", function() {
   var sideBarMenu = document.getElementById("side-bar-menu");
@@ -93,6 +83,10 @@ for (var i = 0; i < table.rows.length; i++) {
   }
 
 
+
+
+
+
   
   function loadSupermarkets(){
 
@@ -116,8 +110,6 @@ for (var i = 0; i < table.rows.length; i++) {
       var cell5 = document.createElement('td');
       var cell6 = document.createElement('td');
 
-      
-
   
 
       // set the inner HTML for each cell
@@ -126,7 +118,6 @@ for (var i = 0; i < table.rows.length; i++) {
       
 
       
-
       cell2.innerHTML = object.id;
       cell3.innerHTML = object.lat;
       cell4.innerHTML = object.lon;
@@ -144,29 +135,85 @@ for (var i = 0; i < table.rows.length; i++) {
 
       // append the row to the table
       table.appendChild(row);
-
-      editableTable();
+  
+      // GIVE SAME ID TO ALL VALUES
+      // Loop through all of the rows in the table
+      for (var i = 0; i < table.rows.length; i++) {
+      // Loop through all of the cells in the row
+      for (var j = 0; j < table.rows[i].cells.length; j++) {
+      // Give the cell the same ID
+       table.rows[i].cells[j].id = "tdId";
+      }
+      }
       
+    
+    
     });
+    // save original data
+    saveOriginalData();
   });
+      
   }
 			
-  function editableTable(){
-    // get the table element
-var table = document.getElementById('leaderboard');
 
-// loop through the rows and cells of the table
-for (var i = 0; i < table.rows.length; i++) {
-  var row = table.rows[i];
-  for (var j = 0; j < row.cells.length; j++) {
-    var cell = row.cells[j];
-    // get the cell value
-    var cellValue = cell.innerHTML;
-    // create an input element
-    var input = document.create
+
+function saveOriginalData(){
+  const table = document.querySelector('leaderboard');
+const cells = document.getElementsByTagName('td');
+
+for (let i = 0; i < cells.length; i++) {
+  originalValues[i] = cells[i].innerHTML;
+  console.log( originalValues[i]);
+}
+console.log("/////////")
+
+}
+
+// function we use to compare  original data with current
+function compareData(originalValues){
+  const table = document.querySelector('leaderboard');
+const cells = document.getElementsByTagName('td');
+
+for (let i = 0; i < cells.length; i++) {
+  if (cells[i].innerHTML !== originalValues[i]) {
+    console.log(`The value of cell ${i+1} has changed.`);
+    newValue = cells[i].innerHTML;
+    console.log("The value used to be",originalValues[i],"and now it's", newValue)
+   
   }
 }
+}
+
+// function for actual search for new data
+function searchForUpdatedCell (){
+  compareData(originalValues);
+}
+
+
+
+function updateTable(newValue) {
+  
+  // Get a reference to the table
+  var table = document.getElementById("leaderboard");
+
+  // Find the cell that was changed
+  var cell;
+  for (var i = 0; i < table.rows.length; i++) {
+    for (var j = 0; j < table.rows[i].cells.length; j++) {
+      if (table.rows[i].cells[j].textContent === newValue) {
+        cell = table.rows[i].cells[j];
+      }
+    }
   }
+
+  // Update the cell with the new value
+  cell.innerHTML = newValue;
+  console.log("Value has changed");
+
+}
+
+
+
 
 </script>
 </html>
