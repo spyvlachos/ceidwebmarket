@@ -81,8 +81,11 @@ td, th {
   padding: 8px; /* Add padding to the cells */
   background-color: white;
   min-width: 70px; /* Set the minimum width of the cells to 50 pixels */
+  
 
 }
+
+
 
 
 th {
@@ -102,4 +105,17 @@ h1 {
   border: none;
   background-color: transparent;
   left: 54px;
+}
+
+#loadData{
+ 
+  position: fixed;
+  bottom: 650px;
+  right: 20px;
+}
+
+#updateData{   
+  position: fixed;
+  bottom: 620px;
+  right: 10px;
 }
