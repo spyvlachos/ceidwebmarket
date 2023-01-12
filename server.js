@@ -411,7 +411,41 @@ application.post('/api/register', async(req, res)=> {
     }
 
     res.json({ status:'ok'})
-})
+},
+
+application.post('/api/map', async(req, res)=> {
+    
+const MongoClient = require('mongodb').MongoClient;
+
+const uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+    const collection = client.db("test").collection("supermarkets");
+    const element = document.getElementById('map');
+    const locations = [];
+
+    documents.forEach(document => {
+        locations.push({lat: document.lat, lng: document.lon});
+      });
+
+  for (let i = 0; i < locations.length; i++) {
+    const marker = new google.maps.Marker({
+      position: locations[i],
+      map: map
+    });
+    
+    marker.addListener('click', () => {
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<h2>Location ${i + 1}</h2>`
+        });
+        infoWindow.open(map, marker);
+      });
+  }
+  market.close();
+});
+}),
+
+)
 
 application.use('/login.html', loginRouter);
 application.use('/logadmin.html', logadminRouter);
