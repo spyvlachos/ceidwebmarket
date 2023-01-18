@@ -51,6 +51,10 @@
 
 let originalValues = [];
 let newValue;
+let previousValue;
+let columnName;
+let rowOfEditedCell;
+let idOfEditedCell;
 
 // toggle button for menu
 document.getElementById("menu-toggle").addEventListener("click", function() {
@@ -89,9 +93,7 @@ for (var i = 0; i < table.rows.length; i++) {
 
   
   function loadSupermarkets(){
-
-
-    fetch('supermarkets.json')
+    fetch('/api/supermarkets')
   .then(response => response.json())
   .then(data => {
     // get the table element
@@ -135,18 +137,6 @@ for (var i = 0; i < table.rows.length; i++) {
 
       // append the row to the table
       table.appendChild(row);
-  
-      // GIVE SAME ID TO ALL VALUES
-      // Loop through all of the rows in the table
-      for (var i = 0; i < table.rows.length; i++) {
-      // Loop through all of the cells in the row
-      for (var j = 0; j < table.rows[i].cells.length; j++) {
-      // Give the cell the same ID
-       table.rows[i].cells[j].id = "tdId";
-      }
-      }
-      
-    
     
     });
     // save original data
@@ -174,10 +164,21 @@ function compareData(originalValues){
   const table = document.querySelector('leaderboard');
 const cells = document.getElementsByTagName('td');
 
+
 for (let i = 0; i < cells.length; i++) {
+
+  
   if (cells[i].innerHTML !== originalValues[i]) {
     console.log(`The value of cell ${i+1} has changed.`);
+    rowOfEditedCell = cells[i+1].parentNode;
+
+    var res = rowOfEditedCell.textContent.match(/\d{1,9}/);
+    idOfEditedCell = res[0];
+
+    console.log(idOfEditedCell);
+    
     newValue = cells[i].innerHTML;
+    previousValue = originalValues[i];
     console.log("The value used to be",originalValues[i],"and now it's", newValue)
    
   }
@@ -186,9 +187,35 @@ for (let i = 0; i < cells.length; i++) {
 
 // function for actual search for new data
 function searchForUpdatedCell (){
-  compareData(originalValues);
-}
 
+  compareData(originalValues);
+
+  const table = document.getElementById('leaderboard');
+  var rows = table.getElementsByTagName("tr");
+  var headers = table.getElementsByTagName("th");
+
+ 
+
+  for (var i = 0; i < rows.length; i++) {
+    var cells = rows[i].getElementsByTagName("td");
+    console.log(rows[i]);
+    for (var j = 0; j < cells.length; j++) {
+      
+      if (cells[j].textContent === previousValue) {
+       
+        columnName = headers[j].textContent;
+        break;
+      }
+    }
+  }
+  console.log(columnName);
+
+  fetch('/server', {
+  method: 'POST',
+  body: JSON.stringify({ myVariable: newValue, secondVariable: previousValue, myColumn:columnName, myId:idOfEditedCell }),
+  headers: { 'Content-Type': 'application/json' },
+})
+}
 
 
 function updateTable(newValue) {
@@ -209,6 +236,7 @@ function updateTable(newValue) {
   // Update the cell with the new value
   cell.innerHTML = newValue;
   console.log("Value has changed");
+
 
 }
 
