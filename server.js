@@ -26,8 +26,10 @@ const delstoresRouter = require('./routes/deletestores');
 const mapRoutes = require('./routes/map');
 const chartRoutes = require('./routes/chart');
 
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const db = require("./model");
 
 
 const JWT_SECRET = 'sdjkfh89qiuhesdbhjdsfg839ujkdhfjk'
@@ -200,37 +202,6 @@ application.post('/api/logadmin', async (req, res) => {
 
 
 
-////////////////////////////////////////////////////////////
-/*
-application.post('/api/chart', async (req, res) => {
-    const { username, password } = req.body
-
-
-
-    const admin = await admins.findOne({ username }).lean()
-
-
-    if (!admin) {
-        return res.json({ status: 'error', error: 'invalid username' })
-   }
-
-    if (await bcrypt.compare(password, admin.password)) {
-        const token = jwt.sign({ id: admin._id, username: admin.username },
-            JWT_SECRET)
-        return res.json(
-            {
-                status: 'ok',
-                data: token
-            })
-
-        res.redirect('/userhome.ejs');
-    }
-
-    res.json({ status: 'error', error: 'wrong password' })
-})
-*/
-
-  ////////////////////////////////////////////////////////////////////////////////
 application.get('/api/chart', async (req,res)=>{
     var data = await Store.find({"covidcases": {$gt:0}}, {'name':true,'covidcases':true})
     return jsonify ({'data': result['values']})
@@ -411,41 +382,7 @@ application.post('/api/register', async(req, res)=> {
     }
 
     res.json({ status:'ok'})
-},
-
-application.post('/api/map', async(req, res)=> {
-    
-const MongoClient = require('mongodb').MongoClient;
-
-const uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-    const collection = client.db("test").collection("supermarkets");
-    const element = document.getElementById('map');
-    const locations = [];
-
-    documents.forEach(document => {
-        locations.push({lat: document.lat, lng: document.lon});
-      });
-
-  for (let i = 0; i < locations.length; i++) {
-    const marker = new google.maps.Marker({
-      position: locations[i],
-      map: map
-    });
-    
-    marker.addListener('click', () => {
-        const infoWindow = new google.maps.InfoWindow({
-          content: `<h2>Location ${i + 1}</h2>`
-        });
-        infoWindow.open(map, marker);
-      });
-  }
-  market.close();
-});
-}),
-
-)
+})
 
 application.use('/login.html', loginRouter);
 application.use('/logadmin.html', logadminRouter);
@@ -468,8 +405,66 @@ application.get('/', (req, res) => {
 });
 
 
+// update data in mongodb
+application.post('/server', async function(req, res) {
+   
+    var newValue = req.body.myVariable;
+    var previousValue = req.body.secondVariable;
+    var columnValue = req.body.myColumn;
+    var id = req.body.myId;
+    console.log(newValue);
+    console.log(previousValue);
+    console.log(columnValue);
+    console.log(id);
 
+    
+    const storeId = await Store.findOne({id}).lean();
+    console.log(storeId)
+
+    if (!storeId)
+    {
+        console.log("Didn't find a store with that id")
+    }
+    if (storeId){
+
+        await Store.updateOne(
+
+            {id},
+            {
+                    $set:{previousValue:newValue}
+            }
+        )
+
+
+    }
+
+    
+}
+);
+
+
+
+application.get('/api/supermarkets',async (req,res) =>
+    {
+        const supers = await Store.find().lean();
+        const supersJson =  JSON.stringify(supers);
+        res.send(supersJson);
+    })
+
+    
+    // const query = { previousValue: previousValue };
+    // const update = { $set: { previousValue: newValue } };
+    // const options = { returnOriginal: false };
+    // Store.findOneAndUpdate(query, update, options, (err, res) => {
+    //   if (err) throw err;
+    //   console.log(res.value);
+    // });
+
+  
 
 application.listen(PORT, () => {
     console.log("server started")
 });
+
+
+
