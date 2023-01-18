@@ -30,6 +30,7 @@ const chartRoutes = require('./routes/chart');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require("./model");
+const Stores = require("./model/store");
 
 
 const JWT_SECRET = 'sdjkfh89qiuhesdbhjdsfg839ujkdhfjk'
@@ -60,29 +61,7 @@ application.use('/', express.static(path.join(__dirname, 'views')))
 application.use('/', express.static(path.join(__dirname, 'components')))
 application.use('/', express.static(path.resolve(__dirname, 'webapp')))
 
-application.post('/api/markers', async (req, res) => {
-    const lng = req.body.lng;
-    const lat = req.body.lat;
 
-    Store.find({
-        loc: {
-            $near: {
-                $geometry: {
-                    type: 'Point',
-                    coordinates: [lng, lat],
-                },
-            },
-        },
-    },
-        function (err, Store) {
-            if (err) {
-                res.send(err);
-            } else { res.json(stores); }
-        }
-    );
-
-   
-})
 
 application.post('/api/addcov', async (req, res) => {
     const { name ,covidcases } = req.body
@@ -444,27 +423,25 @@ application.post('/server', async function(req, res) {
 
 
 
+application.get('/api/markers', async (req,res)=>{
+   var supers = await Store.find().lean();
+   
+    res.send(supers);
+}
+)
+
+
+
 application.get('/api/supermarkets',async (req,res) =>
     {
         const supers = await Store.find().lean();
         const supersJson =  JSON.stringify(supers);
         res.send(supersJson);
-    })
+    });
+
 
     
-    // const query = { previousValue: previousValue };
-    // const update = { $set: { previousValue: newValue } };
-    // const options = { returnOriginal: false };
-    // Store.findOneAndUpdate(query, update, options, (err, res) => {
-    //   if (err) throw err;
-    //   console.log(res.value);
-    // });
-
-  
 
 application.listen(PORT, () => {
     console.log("server started")
 });
-
-
-
