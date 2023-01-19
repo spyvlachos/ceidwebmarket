@@ -1,0 +1,272 @@
+<!DOCTYPE html >
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="homescreen.css">
+                        <title>home</title>
+   
+         </head>
+
+        <body style="background-color: white;">
+            <h1 class="h1">products</h1>
+        <!--The leaderboard as mainscreen-->
+        <div >
+        <table id="products" contenteditable = "true">
+            <tr>
+              <th contenteditable = "false" oninput="updateTable(event)">id</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">name</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">category</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">subcategory</th>
+              <th  contenteditable = "false" oninput="updateTable(event)">offer</th>
+            </tr>
+          </table>
+        </div>
+        <button id ="loadData" onclick="loadSupermarkets()">Load Data</button>
+        <button id ="updateData" onclick="searchForUpdatedCell()">Update Data</button>
+
+
+        <!-- The side bar menu -->
+        <div id="side-bar-menu">
+            <ul>
+            <li><a href="./adminhome.html"><button type="button" id="buttons">back</button></a></li>
+            </ul>
+        </div>
+        
+
+        
+        <!-- The toggle button for the side bar menu -->
+        <button id="menu-toggle"> <img src="home.png" width="50" height="50"> </button>
+                                        
+        </body>
+
+<script>
+
+let originalValues = [];
+let newValue;
+
+// toggle button for menu
+document.getElementById("menu-toggle").addEventListener("click", function() {
+  var sideBarMenu = document.getElementById("side-bar-menu");
+  var mainContent = document.getElementById("main-content");
+  if (sideBarMenu.style.left == "-250px") {
+    sideBarMenu.style.left = "0";
+    mainContent.style.marginLeft = "250px";
+  } else {
+    sideBarMenu.style.left = "-250px";
+    mainContent.style.marginLeft = "0";
+  }
+});
+
+
+
+var table = document.getElementById("products");
+// Loop through the rows of the table
+for (var i = 0; i < table.rows.length; i++) {
+    // Loop through the cells of the current row
+    for (var j = 0; j < table.rows[i].cells.length; j++) {
+      // Get the current cell
+      var cell = table.rows[i].cells[j];
+
+      // If the cell is empty, set its value to the default value
+      if (cell.innerHTML === "") {
+        cell.innerHTML = "N/A";
+      }
+    }
+  }
+
+
+
+
+
+
+  
+  function loadSupermarkets(){
+
+
+    fetch('/api/products')
+  .then(response => response.json())
+  .then(data => {
+    // get the table element
+    var table = document.getElementById('products');
+
+    // loop through the array of data
+    data.forEach(function(object) {
+      // create a new table row element
+      var row = document.createElement('tr');
+
+      // create a new table cell for each object property
+      var cell1 = document.createElement('td');
+      var cell2 = document.createElement('td');
+      var cell3 = document.createElement('td');
+      var cell4 = document.createElement('td');
+      var cell5 = document.createElement('td');
+    
+
+  
+
+      // set the inner HTML for each cell
+      cell1.innerHTML = object.id;
+      var input = document.createElement('input');
+      
+
+      
+      cell2.innerHTML = object.name;
+      cell3.innerHTML = object.category;
+      cell4.innerHTML = object.subcategory;
+      cell5.innerHTML = object.offer;
+
+      // append the cells to the new row
+      row.appendChild(cell1);
+      row.appendChild(cell2);
+      row.appendChild(cell3);
+      row.appendChild(cell4);
+      row.appendChild(cell5);
+    
+
+
+      // append the row to the table
+      table.appendChild(row);
+  
+      // GIVE SAME ID TO ALL VALUES
+      // Loop through all of the rows in the table
+      for (var i = 0; i < table.rows.length; i++) {
+      // Loop through all of the cells in the row
+      for (var j = 0; j < table.rows[i].cells.length; j++) {
+      // Give the cell the same ID
+       table.rows[i].cells[j].id = "tdId";
+      }
+      }
+      
+    
+    
+    });
+    // save original data
+    saveOriginalData();
+  });
+      
+  }
+			
+
+
+function saveOriginalData(){
+  const table = document.querySelector('products');
+const cells = document.getElementsByTagName('td');
+
+for (let i = 0; i < cells.length; i++) {
+  originalValues[i] = cells[i].innerHTML;
+  console.log( originalValues[i]);
+}
+console.log("/////////")
+
+}
+
+// function we use to compare  original data with current
+function compareData(originalValues){
+  const table = document.querySelector('products');
+const cells = document.getElementsByTagName('td');
+
+for (let i = 0; i < cells.length; i++) {
+  if (cells[i].innerHTML !== originalValues[i]) {
+    console.log(`The value of cell ${i+1} has changed.`);
+    newValue = cells[i].innerHTML;
+    console.log("The value used to be",originalValues[i],"and now it's", newValue)
+}
+  }
+
+
+
+
+
+
+
+
+ 
+
+
+
+  const Storetable = document.getElementById('products');
+
+// Create an empty array to store the data
+const data = [];
+
+// Iterate over the rows of the table
+for (const row of Storetable.rows) {
+  // Skip the first row (the header row)
+  if (row.rowIndex === 0) {
+    continue;
+  }
+
+  // Create an object to store the data for this row
+  const item = {};
+
+  // Iterate over the cells of the row
+  for (const cell of row.cells) {
+    // Get the cell's text content and the header text of the corresponding column
+    const value = cell.textContent;
+    const header = table.rows[0].cells[cell.cellIndex].textContent;
+
+    // Add the value to the item object using the header text as the key
+    item[header] = value;
+  }
+
+  // Add the item object to the data array
+  data.push(item);
+}
+
+// Convert the data array to a JSON string
+const dataJson = JSON.stringify(Storetable);
+fetch('/api/updatestores', {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: dataJson
+})
+  .then(response => response.json())
+  .then(result => {
+    console.log(result.message);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+
+
+
+
+}
+
+
+// function for actual search for new data
+function searchForUpdatedCell (){
+  compareData(originalValues);
+}
+
+
+
+function updateTable(newValue) {
+  
+  // Get a reference to the table
+  var table = document.getElementById("products");
+
+  // Find the cell that was changed
+  var cell;
+  for (var i = 0; i < table.rows.length; i++) {
+    for (var j = 0; j < table.rows[i].cells.length; j++) {
+      if (table.rows[i].cells[j].textContent === newValue) {
+        cell = table.rows[i].cells[j];
+      }
+    }
+  }
+
+  // Update the cell with the new value
+  cell.innerHTML = newValue;
+  console.log("Value has changed");
+
+}
+
+
+
+
+</script>
+</html>
