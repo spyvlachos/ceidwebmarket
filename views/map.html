@@ -1,85 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html >
 <head>
-    <script src="server.js"></script>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-   crossorigin=""/>
-   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" href="map.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin="">
+    </script>
 
-        #map {
-            width: 100%;
-            height: 100vh;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="map"></div>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script>
 
-        var map_init = L.map('map', {
-            center: [38.2466, 21.7345],
-            zoom: 14
-        });
-        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map_init);
-        L.Control.geocoder().addTo(map_init);
-        if (!navigator.geolocation) {
-            console.log("Your browser doesn't support geolocation feature!")
-        } else {
-            setInterval(() => {
-                navigator.geolocation.getCurrentPosition(getPosition)
-            }, 5000);
-        };
-        var marker, circle, lat, long, accuracy;
+ <div id = "map"> </div>
 
-        function getPosition(position) {
-            // console.log(position)
-            lat = position.coords.latitude
-            long = position.coords.longitude
-            accuracy = position.coords.accuracy
-
-            if (marker) {
-                map_init.removeLayer(marker)
-            }
-
-            if (circle) {
-                map_init.removeLayer(circle)
-            }
-
-            marker = L.marker([lat, long])
-            circle = L.circle([lat, long], { radius: accuracy })
-
-            var featureGroup = L.featureGroup([marker, circle]).addTo(map_init)
-
-           // map_init.fitBounds(featureGroup.getBounds())
-
-            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
-
-
-
-
-        }
-    </script>
 </body>
+
+<script>
+
+let usersLat;
+let usersLong;
+var map = L.map('map').setView([38.2466, 21.7346], 15);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+if ('geolocation' in navigator){
+    console.log("available");
+    navigator.geolocation.getCurrentPosition(function(position){
+        usersLat = position.coords.latitude
+        usersLong = position.coords.longitude
+        console.log(usersLat);
+        console.log(usersLong);
+        var marker = L.marker([usersLat, usersLong]).addTo(map);
+        map.setView([usersLat, usersLong], 15);
+    })
+}
+else{
+    console.log("not available");
+
+}
+
+
+fetch('/api/markers')
+.then(response => response.json())
+.then(data =>{
+    console.log(data); 
+    for(i=0; i < data.length; i++)
+    {   
+        var marker =  L.marker([data[i].lat,data[i].lon]).addTo(map);
+        marker.bindPopup(data[i].tags.name).openPopup();
+        // var popup = marker.popup()
+        //         .setLatLng([data[i].lat, data[i].lon])
+        //         .setContent(data[i].name)
+        //         .openOn(map);
+    }
+   
+    
+})
+
+
+
+</script>
+
+
 
 </html>
