@@ -92,6 +92,19 @@ application.post('/api/addcov', async (req, res) => {
 })
 
 
+application.get('/api/products', async (req, res) => {
+    
+    
+  
+    
+    const supers = await products.find().lean();
+    const supersJson = JSON.stringify(supers);
+  
+
+    res.send(supersJson);
+  });
+
+
 
 
 application.delete('/api/deletestore', async (req, res) => {
