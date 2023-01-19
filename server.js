@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const User = require('./model/user');
 const Store = require('./model/store');
 const admins = require('./model/admin');
+const products = require('./model/products');
 const schemadb = require('./model');
 const loginRouter = require('./routes/login');
 const logadminRouter = require('./routes/logadmin');
@@ -25,6 +26,8 @@ const storesRouter = require('./routes/stores');
 const delstoresRouter = require('./routes/deletestores');
 const mapRoutes = require('./routes/map');
 const chartRoutes = require('./routes/chart');
+const productsRoutes = require('./routes/products');
+
 
 
 const bcrypt = require('bcryptjs');
@@ -390,6 +393,7 @@ application.use('/addstore.html', addstoreRouter);
 application.use('/map.html', mapRoutes);
 application.use('/deletestores.html', delstoresRouter);
 application.use('/chart.html', chartRoutes);
+application.use('/products.html', productsRoutes);
 application.get('/', (req, res) => {
    
     res.render('index.html');
