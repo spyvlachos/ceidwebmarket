@@ -12,7 +12,7 @@ body {
   	width: auto;
   	height: auto;
   
-    background-image: url("background.jpg") ;
+    background-color: #D9D9D9 ;
     background-size: cover;
   
     
@@ -24,7 +24,7 @@ body {
     min-height: 100px;
     margin: 7% auto 0 auto;
     text-align: center;
-    background: linear-gradient(to bottom, rgba(180, 124, 120, 0.8) 0%, rgba(58, 40, 40, 0.6) 100%);
+    background: linear-gradient(to bottom, #2f4f4f 0%, #121a17 100%);
    
  } 
  .header{
@@ -37,13 +37,13 @@ body {
 
  .header div{
     float: left;
-	  color: #fff;
+	  color: #2f4f4f;
 	  font-size: 45px;
 	
 }
 
 .header div span{
-  	color: #dc3226 ;
+    color: #121a17;
 }
 
  h2 {
