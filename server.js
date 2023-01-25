@@ -27,6 +27,7 @@ const delstoresRouter = require('./routes/deletestores');
 const mapRoutes = require('./routes/map');
 const chartRoutes = require('./routes/chart');
 const productsRoutes = require('./routes/products');
+const addproductRouter = require('./routes/addproduct');
 
 
 
@@ -437,6 +438,7 @@ application.use('/map.html', mapRoutes);
 application.use('/deletestores.html', delstoresRouter);
 application.use('/chart.html', chartRoutes);
 application.use('/products.html', productsRoutes);
+application.use('/addproduct.html', addproductRouter);
 application.get('/', (req, res) => {
    
     res.render('index.html');
