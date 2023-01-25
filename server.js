@@ -95,6 +95,49 @@ application.post('/api/addcov', async (req, res) => {
 })
 
 
+
+application.post('api/addoffer', async (req,res)=>{
+    var name = req.body.name;
+    var newoffer = req.body.offer;
+
+
+    const productn = await products.findOne({ name }).lean()
+
+    console.log(productn)
+    if (!product) {
+        
+        return res.json({ status: 'error', error :'invalid product search' })
+    }
+
+    if(product) {
+
+        
+        await products.updateOne(
+            //covidcases=covidcases+1,
+            { name },
+            {
+                $push:{offer: newoffer}
+                
+            }
+        )
+        
+    res.json({ status: 'ok' })
+    }
+
+
+    let date_ob = new Date();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    let hours = date_ob.getHours();
+    let minutes = date_ob.getMinutes();
+    let seconds = date_ob.getSeconds();
+
+
+   console.log(year + "-" + month + "-" + date)
+ })
+
+
 application.get('/api/products', async (req, res) => {
     
     
