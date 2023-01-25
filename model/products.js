@@ -15,9 +15,11 @@ subcategory: {
 },
 offer: {
     type: "array",
-    "items": {
-        "type": "number"
-    }
+  
+},
+    date: {
+    type: "array",
+  
 },
 
     },{ collection: 'products' }
