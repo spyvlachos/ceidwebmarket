@@ -8,44 +8,39 @@
   </head>
   <body>
     <div class="container">
-    <h1>add store</h1>
-    <form id="reg-form">
+    <h1>add product</h1>
+    
         
         <input type="text" autocomplete="off" id="name" placeholder="name" />
         <input type="text" autocomplete="off" id="offer" placeholder="offer" />
-        <input type="submit" value="Submit Form" />
+      
+
+        <button id ="addOfferButton" onclick=registerStore()> add offer</button>
        
       
-        
-      </form>
+      
     </div>
-
+  </body>
     <script>
-      const form = document.getElementById('reg-form')
-      form.addEventListener('submit', registerStore)
 
-      async function registerStore(event) {
-      event.preventDefault()
+   
+
+      function registerStore() {
       const name = document.getElementById('name').value 
       const offer = document.getElementById('offer').value
 
-      const result = await fetch('api/addoffer', {
-      method: 'POST',
-      headers: {
-      'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-       id, name, offer
-      })
-      }).then((res) => res.json())
+      console.log(name);
+      console.log(offer);
 
-      if (result.status === 'ok') {
-      // everythign went fine
-      alert('Success')
-      } else {
-      alert(result.error)
-      }
-      }
-    </script>
-  </body>
+      fetch('/api/addoffer', {
+        method: 'POST',
+        body: JSON.stringify({ name: name, offer: offer }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+    
+  </script>
+
 </html>
