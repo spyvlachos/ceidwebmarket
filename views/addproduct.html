@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+    <h1>add store</h1>
+    <form id="reg-form">
+        
+        <input type="text" autocomplete="off" id="name" placeholder="name" />
+        <input type="text" autocomplete="off" id="offer" placeholder="offer" />
+        <input type="submit" value="Submit Form" />
+       
+      
+        
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById('reg-form')
+      form.addEventListener('submit', registerStore)
+
+      async function registerStore(event) {
+      event.preventDefault()
+      const name = document.getElementById('name').value 
+      const offer = document.getElementById('offer').value
+
+      const result = await fetch('api/addoffer', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+       id, name, offer
+      })
+      }).then((res) => res.json())
+
+      if (result.status === 'ok') {
+      // everythign went fine
+      alert('Success')
+      } else {
+      alert(result.error)
+      }
+      }
+    </script>
+  </body>
+</html>
