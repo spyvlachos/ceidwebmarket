@@ -382,13 +382,57 @@ application.post("/server", async function (req, res) {
 
 });
 
-application.post("/api/addoffer", async (req, res) => {
-  var newName = req.body.name;
-  var newOffer = req.body.offer;
+application.post('/api/addoffer', async (req,res)=>{
+    var name = req.body.name;
+    var newoffer = req.body.offer;
+    let date_ob = new Date();
+    let dateday = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    let hours = date_ob.getHours();
+    let minutes = date_ob.getMinutes();
+    let seconds = date_ob.getSeconds();
 
-  console.log(newName);
-  console.log(newOffer);
-});
+
+
+    const productn = await products.findOne({ name }).lean()
+
+    console.log(productn)
+    if (!productn) {
+        
+        return res.json({ status: 'error', error :'invalid product search' })
+    }
+
+    if(productn) {
+
+        
+        await products.updateOne(
+            
+            { name },
+            {
+                $push:{offer: newoffer}
+                
+            }
+        )
+
+
+
+        await products.updateOne(
+            
+            { name },
+            {
+                $push:{date: dateday}
+                
+            }
+        )
+        
+    res.json({ status: 'ok' })
+    }
+
+
+ 
+
+ });
 
 application.get("/api/markers", async (req, res) => {
   var supers = await Store.find().lean();
