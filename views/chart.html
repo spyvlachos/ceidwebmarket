@@ -1,82 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <title>Login FOrm</title>
-   
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
-</script>
+  <head>
+    <title>Admin/charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  </head>
 
-</head>
-<body>
-	<div class="header">
-		<div>Covid<span>Tracker</span></div>
-	</div>
-    
-    <div class="container">
-        <h2>chart</h2>
-        <input type="submit" value="Submit Form" />
-        
-<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+  <body>
+    <canvas id="chart1"></canvas>
+    <button onclick="goBack()" ><img src="back.png" width="50" height="50"> </button>
+  </body>
+
+  <script>
+    let sortedData = [];
+
+    fetch("/api/createChart")
+      .then((response) => response.json())
+      .then((data) => {
+        data.sort(function (a, b) {
+          var one = a.dateOfOffer.split("/").reverse().join("");
+          var two = b.dateOfOffer.split("/").reverse().join("");
+          return one > two ? 1 : one < two ? -1 : 0;
+        });
+
+        console.log(data);
+        var totalNumberofOffers = 0;
+
+        for (i = 0; i < data.length; i++) {
+          totalNumberofOffers += data[i].offer.length;
+
+          if (i == data.length - 1)
+            sortedData.push({
+              date: data[i].dateOfOffer,
+              numberOfOffers: totalNumberofOffers,
+            });
+          else if (data[i].dateOfOffer !== data[i + 1].dateOfOffer) {
+            sortedData.push({
+              date: data[i].dateOfOffer,
+              numberOfOffers: totalNumberofOffers,
+            });
+            totalNumberofOffers = 0;
+          }
+        }
+
+        console.log(sortedData);
+        console.log(sortedData.map((data) => data.date));
+        var ctx = document.getElementById("chart1").getContext("2d");
+        var chart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: sortedData.map((data) => data.date),
+            datasets: [
+              {
+                label: "My Offers",
+                data: sortedData.map((data) => data.numberOfOffers),
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                },
+              ],
+            },
+          },
+        });
+      });
 
 
-
-           </div>
-            
-        </form>
-    </div>
-    <script>
-
-
-var myChart = new Chart("myChart", {
-    type: "scatter",
-    data: {
-    datasets: [{
-      pointRadius: 4,
-      pointBackgroundColor: "rgb(0,0,255)",
-      data: values
-    }]
-  },
-  options: {
-    legend: {display: false},
-    scales: {
-      xAxes: [{ticks: {min: 40, max:160}}],
-      yAxes: [{ticks: {min: 6, max:16}}],
-    }
-  }
-});
-
-const form = document.getElementById('log-form')
-			form.addEventListener('submit', login)
-
-			async function login(event) {
-				event.preventDefault()
-				
-
-				var result = await fetch('/api/chart', {
-					method: 'GET'
-					
-				}).then((res) => res.json())
-                .then(data =>{
-                    data.forEach(element => {
-                        var values
-                    });
-                })
-
-				if (result.status === 'ok') {
-				
-					console.log('Got the token: ', result.data)
-					localStorage.setItem('token', result.data)
-					// alert('Success')
-					window.location.replace("./adminhome.html");
-				} else {
-					alert(result.error)
-				}
-			}
-    </script>
-</body>
+      function goBack() {
+  		  window.history.back();
+  			}
+  </script>
 </html>
