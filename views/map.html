@@ -1,72 +1,160 @@
 <!DOCTYPE html>
-<html >
-<head>
-    <link rel="stylesheet" href="map.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin="">
-    </script>
+<html>
+  <head>
+    <link rel="stylesheet" href="map.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+  </head>
 
-</head>
+  <body>
+    <div id="searchBar">
+      <input id="searchInput" type="search" placeholder="Search.." />
+      <button onclick="search();" type="submit">Search</button>
+      <select id="select">
+        <option value="searchByName">Search by name</option>
+        <option value="searchByCategory">Search by category</option>
+        <option value="searchByOffer">Search by offer</option>
+      </select>
+    </div>
 
-<body>
+    <div id="map"></div>
 
- <div id = "map"> </div>
+    <p class="test1">Red marker shows your location.</p>
 
-</body>
+    <p class="test2">Green markers show stores with offers.</p>
 
-<script>
+    <p class="test3">Blue markers show stores with no offers.</p>
 
-let usersLat;
-let usersLong;
-var map = L.map('map').setView([38.2466, 21.7346], 15);
+    <button onclick="goBack()" ><img src="back.png" width="50" height="50"> </button>
+  </body>
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+  <script>
+    let usersLat;
+    let usersLong;
+    var map = L.map("map").setView([38.2466, 21.7346], 15);
 
-if ('geolocation' in navigator){
-    console.log("available");
-    navigator.geolocation.getCurrentPosition(function(position){
-        usersLat = position.coords.latitude
-        usersLong = position.coords.longitude
+    // marker for user
+    var redMarker = L.icon({
+      iconUrl:
+        "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+      shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    });
+
+    // marker for offers
+    var greenMarker = L.icon({
+      iconUrl:
+        "https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png",
+      shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    });
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    if ("geolocation" in navigator) {
+      console.log("available");
+      navigator.geolocation.getCurrentPosition(function (position) {
+        usersLat = position.coords.latitude;
+        usersLong = position.coords.longitude;
         console.log(usersLat);
         console.log(usersLong);
         var marker = L.marker([usersLat, usersLong]).addTo(map);
+        marker.bindPopup("You are here!").openPopup();
+        marker.setIcon(redMarker);
         map.setView([usersLat, usersLong], 15);
-    })
-}
-else{
-    console.log("not available");
-
-}
-
-
-fetch('/api/markers')
-.then(response => response.json())
-.then(data =>{
-    console.log(data); 
-    for(i=0; i < data.length; i++)
-    {   
-        var marker =  L.marker([data[i].lat,data[i].lon]).addTo(map);
-        marker.bindPopup(data[i].tags.name).openPopup();
-        // var popup = marker.popup()
-        //         .setLatLng([data[i].lat, data[i].lon])
-        //         .setContent(data[i].name)
-        //         .openOn(map);
+      });
+    } else {
+      console.log("not available");
     }
-   
-    
-})
 
+    function search() {
+      textInput = document.getElementById("searchInput");
+      var textInputValue = textInput.value;
+      console.log(textInputValue);
+      select = document.getElementById("select");
+      var selectedOption = select.value;
 
+      if (selectedOption == "searchByName") {
+        console.log(selectedOption);
+        // send name of store we're searching for
+        fetch("/api/searchByName")
+          .then((response) => response.json())
+          .then((data) => {
+            // check if that name exists in stores
+            let nameExists = data.some(
+              (data) => data.tags.name === textInputValue
+            );
 
-</script>
+            if (nameExists) {
+              for (i = 0; i < data.length; i++) {
+                success = 0;
+                if (data[i].tags.name == textInputValue) {
+                  // if there's offers different color pop-up
+                  if (data[i].tags.offer) {
+                    var marker = L.marker([data[i].lat, data[i].lon]).addTo(
+                      map
+                    );
+                    var title = data[i].tags.name;
+                    var description = data[i].tags.offer;
+                    var REVIEW = "ADD REVIEW";
+                    marker.bindPopup("<h3>" +title +"</h3>" +"<p>" +description +"</p>" +"<button id='myButton' onclick = 'yes();''>" +REVIEW +"</button>") .openPopup();
+                    marker.setIcon(greenMarker);
+                    map.setView([usersLat, usersLong], 15);
+                  } else {
+                    var marker = L.marker([data[i].lat, data[i].lon]).addTo(map);
+                    marker.bindPopup(data[i].tags.name).openPopup();
+                    map.setView([usersLat, usersLong], 15);
+                  }
+                }
+              }
+            } else {
+              alert("STORE WITH THAT NAME WASNT FOUND");
+            }
+          });
+      } else if (selectedOption == "searchByCategory") {
+        // tha stelnei textInputValue kai tha antistoixei se proionta pou uparxoyn auths ths kathgorias
 
+        fetch("/api/searchByCategory", {
+          method: "POST",
+          body: JSON.stringify({ myCategory: textInputValue }),
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          });
+      } else {
+        console.log(selectedOption);
+      }
+    }
 
+    function yes() {
+      alert("Button was clicked");
+    }
 
+    function goBack() {
+  		  window.history.back();
+  			}
+  </script>
 </html>
